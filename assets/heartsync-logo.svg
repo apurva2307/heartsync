@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <!-- Background Circle -->
+  <circle cx="150" cy="150" r="140" fill="#ffffff" />
+  
+  <!-- Gradient Background for Hearts -->
+  <defs>
+    <linearGradient id="heartGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B6B" />
+      <stop offset="100%" stop-color="#FF8E8E" />
+    </linearGradient>
+    <linearGradient id="heartGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5E72EB" />
+      <stop offset="100%" stop-color="#7B8CFF" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Left Heart (Pink) -->
+  <path d="M120,110 C120,85 100,75 80,75 C55,75 40,95 40,115 C40,160 120,190 150,210 C150,210 150,210 150,210" 
+        fill="url(#heartGradient1)" />
+  
+  <!-- Right Heart (Blue) -->
+  <path d="M180,110 C180,85 200,75 220,75 C245,75 260,95 260,115 C260,160 180,190 150,210 C150,210 150,210 150,210" 
+        fill="url(#heartGradient2)" />
+  
+  <!-- Pulse Line Connecting Hearts -->
+  <path d="M80,150 L110,150 L120,130 L140,170 L160,130 L180,170 L190,150 L220,150" 
+        fill="none" stroke="#555555" stroke-width="4" stroke-linecap="round" />
+  
+  <!-- Text -->
+  <text x="150" y="250" font-family="Arial, sans-serif" font-weight="bold" font-size="24" text-anchor="middle" fill="#444444">HeartSync</text>
+</svg>
