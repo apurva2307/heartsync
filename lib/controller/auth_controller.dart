@@ -85,9 +85,55 @@ class AuthController extends StateNotifier<bool> {
   }) async {
     state = true;
     final res = await _authAPI.login(email: email, password: password);
+
+    res.fold(
+      (l) {
+        state = false;
+        showToast(msg: l.message, type: "Error");
+      },
+      (r) async {
+        final user = await _authAPI.currentUser();
+        state = false;
+        if (user == null) {
+          // ignore: use_build_context_synchronously
+          Navigator.push(context, LoginScreen.route());
+          return;
+        } else {
+          if (!user.emailVerification) {
+            _authAPI.sendEmailVerification();
+            _authAPI.logout();
+            showToast(
+              msg:
+                  "Your email is not verified. Kindly chech your email to verify.",
+              type: "Error",
+            );
+            return;
+          } else {
+            Navigator.pushAndRemoveUntil(
+              // ignore: use_build_context_synchronously
+              context,
+              HomeScreen.route(),
+              (route) => false,
+            );
+          }
+        }
+      },
+    );
+  }
+
+  void resetPassword({
+    required String email,
+    required BuildContext context,
+  }) async {
+    state = true;
+    final res = await _authAPI.resetPassword(email: email);
     state = false;
     res.fold((l) => showToast(msg: l.message, type: "Error"), (r) {
-      Navigator.push(context, HomeScreen.route());
+      showToast(
+        msg: "Reset Password link sent to your email. Lindly check!",
+        type: "Success",
+      );
+      Navigator.push(context, LoginScreen.route());
     });
   }
 

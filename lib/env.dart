@@ -12,4 +12,6 @@ abstract class Env {
   static String appwriteDatabaseID = _Env.appwriteDatabaseID;
   @EnviedField(varName: 'APPWRITE_USERS_COLLECTIONID', obfuscate: true)
   static String appwriteUsersCollectionID = _Env.appwriteUsersCollectionID;
+  @EnviedField(varName: 'APPWRITE_POSTS_COLLECTIONID', obfuscate: true)
+  static String appwritePostsCollectionID = _Env.appwritePostsCollectionID;
 }

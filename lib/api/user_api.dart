@@ -38,6 +38,10 @@ class UserAPI implements IUserAPI {
         collectionId: AppwriteConstants.usersCollectionID,
         documentId: userModel.uid,
         data: userModel.toMap(),
+        permissions: [
+          Permission.update(Role.user(userModel.uid)),
+          Permission.delete(Role.user(userModel.uid)),
+        ],
       );
       return right(null);
     } on AppwriteException catch (e, st) {

@@ -4,35 +4,30 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_messaging/constants/constants.dart';
 import 'package:my_messaging/controller/controllers.dart';
 import 'package:my_messaging/core/widgets/widgets.dart';
-import 'package:my_messaging/screens/auth/reset_password.dart';
-import 'package:my_messaging/screens/auth/signup.dart';
+import 'package:my_messaging/screens/auth/login.dart';
 import 'package:tap_debouncer/tap_debouncer.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
-  const LoginScreen({super.key});
+class ResetPasswordScreen extends ConsumerStatefulWidget {
+  const ResetPasswordScreen({super.key});
   static route() =>
-      MaterialPageRoute(builder: (context) => const LoginScreen());
+      MaterialPageRoute(builder: (context) => const ResetPasswordScreen());
 
   @override
-  ConsumerState<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<ResetPasswordScreen> createState() =>
+      _ResetPasswordScreenState();
 }
 
-class _LoginScreenState extends ConsumerState<LoginScreen> {
+class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
 
-  void onLogin() {
-    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      showToast(msg: "Kindly enter email and password both.");
+  void onResetPassword() {
+    if (emailController.text.isEmpty) {
+      showToast(msg: "Kindly enter email.");
       return;
     }
     ref
         .read(authControllerProvider.notifier)
-        .login(
-          email: emailController.text,
-          password: passwordController.text,
-          context: context,
-        );
+        .resetPassword(email: emailController.text, context: context);
   }
 
   @override
@@ -56,37 +51,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           controller: emailController,
                           hintText: "Enter email",
                         ),
-                        const SizedBox(height: 20),
-                        AuthField(
-                          controller: passwordController,
-                          hintText: "Enter password",
-                          isPassword: true,
-                        ),
-                        const SizedBox(height: 4),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                ResetPasswordScreen.route(),
-                              );
-                            },
-                            child: Text(
-                              "Forgot Password",
-                              style: TextStyle(
-                                fontSize: FontSize.small,
-                                color: context.primaryColor,
-                              ),
-                            ),
-                          ),
-                        ),
                         const SizedBox(height: 30),
                         TapDebouncer(
                           cooldown: const Duration(milliseconds: 2000),
                           onTap:
                               () async =>
-                                  onLogin(), // your tap handler moved here
+                                  onResetPassword(), // your tap handler moved here
                           builder: (
                             BuildContext context,
                             TapDebouncerFunc? onTap,
@@ -94,7 +64,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             return FilledButton(
                               onPressed: onTap,
                               child: const Text(
-                                "Login",
+                                "Send Reset Password Link",
                                 style: TextStyle(fontSize: FontSize.medium),
                               ),
                             );
@@ -104,14 +74,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         const SizedBox(height: 30),
                         RichText(
                           text: TextSpan(
-                            text: "Don't have an account? ",
+                            text: "Already Have Password? ",
                             style: TextStyle(
                               fontSize: FontSize.medium,
                               color: context.onSurfaceColor,
                             ),
                             children: [
                               TextSpan(
-                                text: ' Sign up',
+                                text: ' Login',
                                 style: TextStyle(
                                   fontSize: FontSize.medium,
                                   color: context.primaryColor,
@@ -121,7 +91,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                       ..onTap = () {
                                         Navigator.push(
                                           context,
-                                          SignUpScreen.route(),
+                                          LoginScreen.route(),
                                         );
                                       },
                               ),

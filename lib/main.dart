@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_messaging/constants/constants.dart';
+import 'package:my_messaging/core/providers.dart';
 import 'package:my_messaging/core/widgets/widgets.dart';
 import 'package:my_messaging/controller/auth_controller.dart';
 import 'package:my_messaging/screens/auth/login.dart';
@@ -38,7 +39,7 @@ class MyInitialPage extends ConsumerWidget {
     return getcurrentUser.when(
       data: (user) {
         if (user != null) {
-          return const HomeScreen();
+          return HomeScreen();
         } else {
           return LoginScreen();
         }
